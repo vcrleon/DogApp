@@ -17,6 +17,7 @@ import com.example.c4q.dogapp.network.DogService;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -123,6 +124,9 @@ public class BreedsActivity extends AppCompatActivity implements OnClickListener
                 String dogName = "terrier";
                 Toast.makeText(BreedsActivity.this, "Terrier!", Toast.LENGTH_SHORT).show();
                 dogCall(dogName);
+                String dogToString = gson.toJson(dogList);
+                dogsIntent.putExtra("Dog_Info",dogToString);
+                startActivity(dogsIntent);
 
             }
         });
@@ -133,6 +137,9 @@ public class BreedsActivity extends AppCompatActivity implements OnClickListener
                 String dogName = "retriever";
                 Toast.makeText(BreedsActivity.this, "Retriever!", Toast.LENGTH_SHORT).show();
                 dogCall(dogName);
+                String dogToString = gson.toJson(dogList);
+                dogsIntent.putExtra("Dog_Info",dogToString);
+                startActivity(dogsIntent);
             }
         });
 
@@ -142,6 +149,9 @@ public class BreedsActivity extends AppCompatActivity implements OnClickListener
                 String dogName = "spaniel";
                 Toast.makeText(BreedsActivity.this, "Spaniel!", Toast.LENGTH_SHORT).show();
                 dogCall(dogName);
+                String dogToString = gson.toJson(dogList);
+                dogsIntent.putExtra("Dog_Info",dogToString);
+                startActivity(dogsIntent);
 
             }
         });
@@ -152,6 +162,9 @@ public class BreedsActivity extends AppCompatActivity implements OnClickListener
                 String dogName = "poodle";
                 Toast.makeText(BreedsActivity.this, "Poodle!", Toast.LENGTH_SHORT).show();
                 dogCall(dogName);
+                String dogToString = gson.toJson(dogList);
+                dogsIntent.putExtra("Dog_Info",dogToString);
+                startActivity(dogsIntent);
             }
         });
 
