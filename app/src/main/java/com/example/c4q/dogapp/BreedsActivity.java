@@ -1,5 +1,6 @@
 package com.example.c4q.dogapp;
 
+import android.content.Intent;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.c4q.dogapp.model.DogImage;
 import com.example.c4q.dogapp.network.DogService;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,15 +37,86 @@ public class BreedsActivity extends AppCompatActivity implements OnClickListener
     DogService dogService;
     HashMap<String, String> dogURL = new HashMap<>();
     List<String> dogList = new ArrayList<>();
+    Intent dogsIntent;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_breed);
 
+        dogsIntent = new Intent(BreedsActivity.this, DogsActivity.class);
+        gson = new Gson();
+
         setUpViews();
         connectDogAPI();
+        viewClickBehavior();
 
+
+
+        Picasso.with(getApplicationContext())
+                .load("https://dog.ceo/api/img/poodle-standard/n02113799_2333.jpg")
+                .into(poodleImage);
+
+
+    }
+
+    @Override
+    public void onClick(View view) {
+//        String terrier = "terrier";
+//        String retriever = "retriever";
+//        String spaniel = "spaniel";
+//        String poodle = "poodle";
+//
+//        switch (view.getId()) {
+//            case R.id.terrier_view:
+//                Toast.makeText(BreedsActivity.this, "Terrier!", Toast.LENGTH_SHORT).show();
+//                dogCall(terrier);
+//                break;
+//            case R.id.retriever_view:
+//                connectDogAPI();
+//                dogCall(retriever);
+//                break;
+//            case R.id.spaniel_view:
+//                dogCall(spaniel);
+//                break;
+//            case R.id.poodle_view:
+//                dogCall(poodle);
+//                break;
+//        }
+
+    }
+
+
+    public void connectDogAPI(){
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://dog.ceo/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        dogService = retrofit.create(DogService.class);
+
+    }
+
+    public void dogCall(String dogName) {
+        Call<DogImage> dog = dogService.getDogImage(dogName);
+        dog.enqueue(new Callback<DogImage>() {
+            @Override
+            public void onResponse(Call<DogImage> call, Response<DogImage> response) {
+                dogList.addAll(response.body().getMessage());
+                Log.d("DogImage", response.body().getMessage().get(0));
+            }
+
+            @Override
+            public void onFailure(Call<DogImage> call, Throwable t) {
+                t.printStackTrace();
+
+            }
+        });
+
+    }
+
+    public void viewClickBehavior(){
         terrierCardView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,65 +152,6 @@ public class BreedsActivity extends AppCompatActivity implements OnClickListener
                 String dogName = "poodle";
                 Toast.makeText(BreedsActivity.this, "Poodle!", Toast.LENGTH_SHORT).show();
                 dogCall(dogName);
-            }
-        });
-
-        Picasso.with(getApplicationContext())
-                .load("https://dog.ceo/api/img/poodle-standard/n02113799_2333.jpg")
-                .into(poodleImage);
-
-
-    }
-
-    @Override
-    public void onClick(View view) {
-//        String terrier = "terrier";
-//        String retriever = "retriever";
-//        String spaniel = "spaniel";
-//        String poodle = "poodle";
-//
-//        switch (view.getId()) {
-//            case R.id.terrier_view:
-//                Toast.makeText(BreedsActivity.this, "Terrier!", Toast.LENGTH_SHORT).show();
-//                dogCall(terrier);
-//                break;
-//            case R.id.retriever_view:
-//                connectDogAPI();
-//                dogCall(retriever);
-//                break;
-//            case R.id.spaniel_view:
-//                dogCall(spaniel);
-//                break;
-//            case R.id.poodle_view:
-//                dogCall(poodle);
-//                break;
-//        }
-
-    }
-
-    public void connectDogAPI(){
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://dog.ceo/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        dogService = retrofit.create(DogService.class);
-
-    }
-
-    public void dogCall(String dogName) {
-        Call<DogImage> dog = dogService.getDogImage(dogName);
-        dog.enqueue(new Callback<DogImage>() {
-            @Override
-            public void onResponse(Call<DogImage> call, Response<DogImage> response) {
-                dogList.addAll(response.body().getMessage());
-                Log.d("DogImage", response.body().getMessage().get(0));
-            }
-
-            @Override
-            public void onFailure(Call<DogImage> call, Throwable t) {
-                t.printStackTrace();
-
             }
         });
 
