@@ -3,4 +3,6 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="submit">Submit</string>
+    <string name="error_username">please enter a username</string>
+    <string name="error_password">please enter a password</string>
 </resources>
