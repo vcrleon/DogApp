@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("password", passwordView.getText().toString());
                         Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), BreedsActivity.class);
+                        intent.putExtra("credentials", SHARED_PREF_KEY);
                         startActivity(intent);
 
                     }

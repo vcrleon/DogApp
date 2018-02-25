@@ -5,4 +5,8 @@
     <string name="submit">Submit</string>
     <string name="error_username">please enter a username</string>
     <string name="error_password">please enter a password</string>
+    <string name="spaniel">Spaniel</string>
+    <string name="retriever">Retriever</string>
+    <string name="terrier">Terrier</string>
+    <string name="poodle">Poodle</string>
 </resources>
